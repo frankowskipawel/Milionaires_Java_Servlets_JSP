@@ -32,6 +32,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("login", login);
             httpServletRequest.getRequestDispatcher("home.jsp").forward(httpServletRequest, httpServletResponse);
         } else {
+            httpServletRequest.setAttribute("errorLogin", "Błędny login lub hasło");
             httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }

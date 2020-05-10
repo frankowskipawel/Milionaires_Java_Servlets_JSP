@@ -3,7 +3,6 @@
 <jsp:include page="header.jsp"/>
 <div class="container">
     <c:if test="${not empty errorLogin}"><h5 style="color:red">${errorLogin}</h5></c:if>
-    <c:if test="${not empty errorPassword}"><h5 style="color:red">${errorPassword}</h5></c:if>
     <form action="/login" method="post">
         <div class="form-group">
             <label for="login">Login</label>
