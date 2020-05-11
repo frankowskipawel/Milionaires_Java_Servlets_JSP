@@ -22,7 +22,7 @@
             </ul>
             <div class="navbar-header" style="float: right">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/start">Nowa gra</a>
+                    <a class="navbar-brand" href="/game">Nowa gra</a>
                 </div>
             </div>
             <div class="navbar-header" style="float: right">

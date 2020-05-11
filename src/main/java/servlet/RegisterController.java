@@ -1,9 +1,8 @@
 package servlet;
 
-import dao.GenericDao;
+import dao.UserDao;
 import entity.User;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +25,7 @@ public class RegisterController extends HttpServlet {
         String login = httpServletRequest.getParameter("login");
         String password = httpServletRequest.getParameter("password");
 
-        GenericDao userDao = new GenericDao(User.class);
+        UserDao userDao = new UserDao();
 
         boolean isValidation = true;
         if (name==null || name.isEmpty()){
@@ -52,11 +51,9 @@ public class RegisterController extends HttpServlet {
             httpServletRequest.getRequestDispatcher("register.jsp").forward(httpServletRequest, httpServletResponse);
             return;
         }
-
         User user = User.builder().name(name).login(login).password(password).build();
-        GenericDao<User> genericDao = new GenericDao<>(User.class);
-        genericDao.insert(user);
-        HttpSession session = httpServletRequest.getSession();
+        userDao.insert(user);
+        HttpSession session =  httpServletRequest.getSession();
         session.setAttribute("login",login);
         httpServletRequest.getRequestDispatcher("home.jsp").forward(httpServletRequest, httpServletResponse);
     }

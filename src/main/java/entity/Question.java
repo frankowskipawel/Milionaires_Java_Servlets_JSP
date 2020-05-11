@@ -1,6 +1,7 @@
 package entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @Entity
+@Builder
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
