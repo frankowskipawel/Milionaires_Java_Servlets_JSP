@@ -18,6 +18,8 @@ public class User {
     private String name;
     @Column(name = "USR_PASSWORD")
     private String password;
+    @Column(name = "USR_CORRECT_ANSWERS")
+    private int sumOfCorrectAnswers;
 
 
     public User() {

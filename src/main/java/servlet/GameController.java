@@ -1,7 +1,9 @@
 package servlet;
 
 import dao.QuestionDao;
+import dao.UserDao;
 import entity.Question;
+import entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +46,10 @@ public class GameController extends HttpServlet {
         if (answer.equals(currentQuestion.getCorrectAnswer())) {
             currentQuestion = getRandomQuestion();
             currentNumber++;
+            UserDao userDao = new UserDao();
+            User user = userDao.findById(login);
+            user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers()+1);
+            userDao.update(user);
             setParametersToSession();
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
             return;

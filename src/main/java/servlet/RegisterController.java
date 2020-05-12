@@ -51,7 +51,7 @@ public class RegisterController extends HttpServlet {
             httpServletRequest.getRequestDispatcher("register.jsp").forward(httpServletRequest, httpServletResponse);
             return;
         }
-        User user = User.builder().name(name).login(login).password(password).build();
+        User user = User.builder().name(name).login(login).password(password).sumOfCorrectAnswers(0).build();
         userDao.insert(user);
         HttpSession session =  httpServletRequest.getSession();
         session.setAttribute("login",login);
