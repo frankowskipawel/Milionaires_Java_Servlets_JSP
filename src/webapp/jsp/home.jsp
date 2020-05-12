@@ -4,7 +4,8 @@
 <jsp:include page="header.jsp"/>
 
 <div class="container">
-    Witaj w Milionerach
+        <h1>Witaj w Milionerach</h1>
+        <img src="/images/home.jpg" alt="defeat">
 </div>
 </body>
 </html>

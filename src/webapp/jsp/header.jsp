@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Milionerzy</title>
@@ -13,7 +14,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Milionerzy</a>
+            <a class="navbar-brand" href="/home">Milionerzy</a>
         </div>
         <c:if test="${not empty login}">
             <ul class="nav navbar-nav">
@@ -31,6 +32,14 @@
                 </div>
             </div>
         </c:if>
+        <c:if test="${login=='admin'}">
+            <div class="navbar-header" style="float: right">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/admin">Dodaj pytanie</a>
+                </div>
+            </div>
+        </c:if>
+
         <c:if test="${empty login}">
             <ul class="nav navbar-nav">
                 <li><a href="/login">Login</a></li>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 @WebServlet(name = "GameController", value = "/game")
@@ -17,6 +18,7 @@ public class GameController extends HttpServlet {
 
     private int NUMBER_OF_GAME_QUESTIONS = 15;
 
+    private List<Question> questionList;
     private int currentNumber = 0;
     private Question currentQuestion;
     private HttpSession session;
@@ -24,7 +26,10 @@ public class GameController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-
+        String login = httpServletRequest.getSession().getAttribute("login").toString();
+        if (login == null || login.isEmpty()) {
+            httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, httpServletResponse);
+        }
         if (currentNumber == 0) {
             initializeGame(httpServletRequest);
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
@@ -49,12 +54,13 @@ public class GameController extends HttpServlet {
     }
 
     public Question getRandomQuestion() {
-        QuestionDao questionDao = new QuestionDao();
         Random generator = new Random();
-        return questionDao.findById(generator.nextInt(3) + 1);
+        return questionList.get(generator.nextInt(questionList.size()));
     }
 
     public void initializeGame(HttpServletRequest httpServletRequest) {
+        QuestionDao questionDao = new QuestionDao();
+        questionList = questionDao.getAllQuestions();
         currentNumber = 1;
         currentQuestion = getRandomQuestion();
         session = httpServletRequest.getSession();

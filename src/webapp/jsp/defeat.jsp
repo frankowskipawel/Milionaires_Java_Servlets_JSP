@@ -3,6 +3,9 @@
 
 <jsp:include page="header.jsp"/>
 <br>
-Przegrałeś!!!
+<div class="container">
+    <h1>Sprobuj jeszcze raz.</h1>
+    <img src="/images/defeat.jpg" alt="defeat">
+</div>
 </body>
 </html>

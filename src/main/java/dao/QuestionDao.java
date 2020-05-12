@@ -2,7 +2,11 @@ package dao;
 
 import entity.Question;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
+
+
+import java.util.List;
 
 public class QuestionDao {
 
@@ -37,5 +41,14 @@ public class QuestionDao {
         }
         session.flush();
         session.close();
+    }
+
+    public List<Question> getAllQuestions(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<Question> query = session.createQuery("SELECT E FROM Question E");
+        query.setReadOnly(true);
+        List<Question> foundQuestions = query.getResultList();
+        session.close();
+        return foundQuestions;
     }
 }
