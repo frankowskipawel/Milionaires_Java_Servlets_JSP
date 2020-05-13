@@ -42,16 +42,38 @@ public class GameController extends HttpServlet {
             return;
         }
         getParametersFromSession();
+
+        String help = httpServletRequest.getParameter("help");
+
+        //help 5050
+        if (help != null && help.equals("5050")) {
+            getWheel5050();
+            httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
+        }
+        //help phone
+        if (help != null && help.equals("phone")) {
+            getWheelPhone(httpServletRequest);
+            httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
+        }
+        //help people
+        if (help != null && help.equals("people")) {
+            getWheelPeople(httpServletRequest);
+            httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
+        }
+
         String answer = httpServletRequest.getParameter("answer");
         if (currentNumber >= NUMBER_OF_GAME_QUESTIONS) {
             resetGame();
             httpServletRequest.getRequestDispatcher("win.jsp").forward(httpServletRequest, httpServletResponse);
         }
+
         String resume = httpServletRequest.getParameter("resume");
-        if (resume==null) {
+        if (resume == null) {
             if (answer.equals(currentQuestion.getCorrectAnswer())) {
                 currentQuestion = getRandomQuestion();
                 currentNumber++;
+                session.removeAttribute("wheelPeople");
+                session.removeAttribute("wheelPhone");
                 UserDao userDao = new UserDao();
                 User user = userDao.findById(login);
                 user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers() + 1);
@@ -66,7 +88,88 @@ public class GameController extends HttpServlet {
         } else {
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
+
     }
+
+    private void getWheelPeople(HttpServletRequest httpServletRequest) {
+        Random random = new Random();
+        HttpSession session = httpServletRequest.getSession();
+        int answer = random.nextInt(2);
+        int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+
+        int incorrectAnswer = random.nextInt(5);
+        while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
+            incorrectAnswer = random.nextInt(5);
+        }
+
+        if (answer==0){session.setAttribute("wheelPeople", currentQuestion.getCorrectAnswer());}
+        if (answer==1){session.setAttribute("wheelPeople", getLetterFromNumber(incorrectAnswer));}
+
+    }
+
+    private void getWheelPhone(HttpServletRequest httpServletRequest) {
+        Random random = new Random();
+        HttpSession session = httpServletRequest.getSession();
+        int answer = random.nextInt(3);
+        int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+
+        int incorrectAnswer = random.nextInt(5);
+        while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
+            incorrectAnswer = random.nextInt(5);
+        }
+
+        if (answer==0){session.setAttribute("wheelPhone", currentQuestion.getCorrectAnswer());}
+        if (answer==1){session.setAttribute("wheelPhone", getLetterFromNumber(incorrectAnswer));}
+        if (answer==2){session.setAttribute("wheelPhone", "Niestety nie znam odpowiedzi.");}
+
+    }
+
+    private void getWheel5050() {
+        int randomIncorrectAnswers;
+        Random random = new Random();
+        randomIncorrectAnswers = random.nextInt(5);
+        int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+        while (randomIncorrectAnswers == 0 || randomIncorrectAnswers == correctAnswerInNumber) {
+            randomIncorrectAnswers = random.nextInt(5);
+        }
+        if (randomIncorrectAnswers != 1 && correctAnswerInNumber != 1) {
+            currentQuestion.setAnswerA("");
+        }
+        if (randomIncorrectAnswers != 2 && correctAnswerInNumber != 2) {
+            currentQuestion.setAnswerB("");
+        }
+        if (randomIncorrectAnswers != 3 && correctAnswerInNumber != 3) {
+            currentQuestion.setAnswerC("");
+        }
+        if (randomIncorrectAnswers != 4 && correctAnswerInNumber != 4) {
+            currentQuestion.setAnswerD("");
+        }
+    }
+
+    public int correctAnswerInNumber(Question question) {
+        if (currentQuestion.getCorrectAnswer().equals("A")) {
+            return 1;
+        }
+        if (currentQuestion.getCorrectAnswer().equals("B")) {
+            return 2;
+        }
+        if (currentQuestion.getCorrectAnswer().equals("C")) {
+            return 3;
+        }
+        if (currentQuestion.getCorrectAnswer().equals("D")) {
+            return 4;
+        }
+        return 0;
+    }
+
+    private String getLetterFromNumber(int number){
+        if (number==1){return "A";}
+        if (number==2){return "B";}
+        if (number==3){return "C";}
+        if (number==4){return "D";}
+        return null;
+    }
+
 
     public Question getRandomQuestion() {
         Random generator = new Random();
