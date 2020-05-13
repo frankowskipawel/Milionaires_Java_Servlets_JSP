@@ -4,7 +4,6 @@ import dao.QuestionDao;
 import dao.UserDao;
 import entity.Question;
 import entity.User;
-import org.hibernate.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -100,7 +99,7 @@ public class GameController extends HttpServlet {
 
             Random random = new Random();
             session = httpServletRequest.getSession();
-            session.setAttribute("opacityPeople",3);
+            session.setAttribute("opacityPeople", 3);
             int answer = random.nextInt(2);
             int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
 
@@ -124,7 +123,7 @@ public class GameController extends HttpServlet {
         if (wheelPhone == true) {
             Random random = new Random();
             session = httpServletRequest.getSession();
-            session.setAttribute("opacityPhone",3);
+            session.setAttribute("opacityPhone", 3);
             int answer = random.nextInt(3);
             int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
 
@@ -148,7 +147,7 @@ public class GameController extends HttpServlet {
 
     private void getWheel5050() {
         if (wheel5050 == true) {
-            session.setAttribute("opacity5050",3);
+            session.setAttribute("opacity5050", 3);
             int randomIncorrectAnswers;
             Random random = new Random();
             randomIncorrectAnswers = random.nextInt(5);
@@ -204,10 +203,17 @@ public class GameController extends HttpServlet {
         return null;
     }
 
-
     public Question getRandomQuestion() {
         Random generator = new Random();
-        return questionList.get(generator.nextInt(questionList.size()));
+        Question question = questionList.get(generator.nextInt(questionList.size()));
+        Question returnQuestion = new Question();
+        returnQuestion.setAnswerA(question.getAnswerA());
+        returnQuestion.setAnswerB(question.getAnswerB());
+        returnQuestion.setAnswerC(question.getAnswerC());
+        returnQuestion.setAnswerD(question.getAnswerD());
+        returnQuestion.setText(question.getText());
+        returnQuestion.setCorrectAnswer(question.getCorrectAnswer());
+        return returnQuestion;
     }
 
     public void initializeGame(HttpServletRequest httpServletRequest) {

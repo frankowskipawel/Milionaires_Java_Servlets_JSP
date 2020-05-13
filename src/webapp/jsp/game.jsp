@@ -9,9 +9,15 @@
 <div class="container">
 
     <div class="container" align="center">
-        <a href="/game?help=phone"><img src="/images/phone.png" width="10%" style="opacity:0.${opacityPhone};filter:alpha(opacity=${opacityPhone}0);" class="img-rounded"></a>
-        <a href="/game?help=5050"><img src="/images/5050.png" width="10%" style="opacity:0.${opacity5050};filter:alpha(opacity=${opacity5050}0);" class="img-rounded"></a>
-        <a href="/game?help=people"><img src="/images/people.png" width="10%" style="opacity:0.${opacityPeople};filter:alpha(opacity=${opacityPeople}0);" class="img-rounded"></a>
+        <a href="/game?help=phone"><img src="/images/phone.png" width="10%"
+                                        style="opacity:0.${opacityPhone};filter:alpha(opacity=${opacityPhone}0);"
+                                        class="img-rounded"></a>
+        <a href="/game?help=5050"><img src="/images/5050.png" width="10%"
+                                       style="opacity:0.${opacity5050};filter:alpha(opacity=${opacity5050}0);"
+                                       class="img-rounded"></a>
+        <a href="/game?help=people"><img src="/images/people.png" width="10%"
+                                         style="opacity:0.${opacityPeople};filter:alpha(opacity=${opacityPeople}0);"
+                                         class="img-rounded"></a>
     </div>
 
 
@@ -48,12 +54,20 @@
                     <div class="container">
                         <h2>${currentQuestion.text}</h2>
                         <div class="btn-group btn-group-justified">
-                            <a href="/game?answer=A" class="btn btn-primary">A: ${currentQuestion.answerA}</a>
-                            <a href="/game?answer=B" class="btn btn-primary">B: ${currentQuestion.answerB}</a>
+                            <a href="<c:if test="${currentQuestion.answerA != ''}">/game?answer=A</c:if>"
+                               class="btn btn-primary"
+                               <c:if test="${currentQuestion.answerA == ''}">disabled</c:if>>A: ${currentQuestion.answerA}</a>
+                            <a href="<c:if test="${currentQuestion.answerB != ''}">/game?answer=B</c:if>"
+                               class="btn btn-primary"
+                               <c:if test="${currentQuestion.answerB == ''}">disabled</c:if>>B: ${currentQuestion.answerB}</a>
                         </div>
                         <div class="btn-group btn-group-justified">
-                            <a href="/game?answer=C" class="btn btn-primary">C: ${currentQuestion.answerC}</a>
-                            <a href="/game?answer=D" class="btn btn-primary">D: ${currentQuestion.answerD}</a>
+                            <a href="<c:if test="${currentQuestion.answerC != ''}">/game?answer=C</c:if>"
+                               class="btn btn-primary"
+                               <c:if test="${currentQuestion.answerC == ''}">disabled</c:if>>C: ${currentQuestion.answerC}</a>
+                            <a href="<c:if test="${currentQuestion.answerD != ''}">/game?answer=D</c:if>"
+                               class="btn btn-primary"
+                               <c:if test="${currentQuestion.answerD == ''}">disabled</c:if>>D: ${currentQuestion.answerD}</a>
                         </div>
                         <br>
                         <br>
@@ -65,5 +79,10 @@
                         </c:if>
                     </div>
                     ${answer}
-                    </body>
-                    </html>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
