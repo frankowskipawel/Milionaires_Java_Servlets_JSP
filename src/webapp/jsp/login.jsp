@@ -2,7 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp"/>
 <div class="container">
-    <c:if test="${not empty errorLogin}"><h5 style="color:red">${errorLogin}</h5></c:if>
+    <c:if test="${not empty errorLogin}">
+        <div class="alert alert-danger">${errorLogin}
+        </div>
+
+    </c:if>
     <form action="/login" method="post">
         <div class="form-group">
             <label for="login">Login</label>

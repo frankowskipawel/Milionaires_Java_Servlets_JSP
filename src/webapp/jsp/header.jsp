@@ -14,7 +14,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/home">Milionerzy</a>
+            <a class="navbar-brand" href="/home">MILIONERZY</a>
         </div>
         <c:if test="${not empty login}">
             <ul class="nav navbar-nav">
@@ -28,7 +28,7 @@
             </div>
             <div class="navbar-header" style="float: right">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/logout">Logout</a>
+                    <a class="navbar-brand" href="/logout">Wyloguj</a>
                 </div>
             </div>
         </c:if>
@@ -42,10 +42,10 @@
 
         <c:if test="${empty login}">
             <ul class="nav navbar-nav">
-                <li><a href="/login">Login</a></li>
+                <li><a href="/login">Zaloguj</a></li>
             </ul>
             <ul class="nav navbar-nav" style="float: right">
-                <li><a href="/register">Register</a></li>
+                <li><a href="/register">Zarejestruj</a></li>
             </ul>
         </c:if>
     </div>

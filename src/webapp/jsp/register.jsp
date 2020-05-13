@@ -2,10 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp"/>
 <div class="container">
-    <c:if test="${not empty errorName}"><h5 style="color:red">${errorName}</h5></c:if>
-    <c:if test="${not empty errorLogin}"><h5 style="color:red">${errorLogin}</h5></c:if>
-    <c:if test="${not empty errorPassword}"><h5 style="color:red">${errorPassword}</h5></c:if>
-    <c:if test="${not empty errorExistLogin}"><h5 style="color:red">${errorExistLogin}</h5></c:if>
+    <c:if test="${not empty errorName}"> <div class="alert alert-danger">${errorName}</div></c:if>
+        <c:if test="${not empty errorLogin}"> <div class="alert alert-danger">${errorLogin}</div></c:if>
+        <c:if test="${not empty errorPassword}"> <div class="alert alert-danger">${errorPassword}</div></c:if>
+    <c:if test="${not empty errorExistLogin}"> <div class="alert alert-danger">${errorExistLogin}</div></c:if>
     <form action="/register" method="post">
         <div class="form-group">
             <label for="name">Imię:</label>
