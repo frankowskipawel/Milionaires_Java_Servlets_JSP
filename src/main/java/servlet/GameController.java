@@ -4,6 +4,7 @@ import dao.QuestionDao;
 import dao.UserDao;
 import entity.Question;
 import entity.User;
+import org.hibernate.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,9 @@ public class GameController extends HttpServlet {
     private int currentNumber = 0;
     private Question currentQuestion;
     private HttpSession session;
+    private boolean wheelPhone;
+    private boolean wheel5050;
+    private boolean wheelPeople;
 
 
     @Override
@@ -92,57 +96,79 @@ public class GameController extends HttpServlet {
     }
 
     private void getWheelPeople(HttpServletRequest httpServletRequest) {
-        Random random = new Random();
-        HttpSession session = httpServletRequest.getSession();
-        int answer = random.nextInt(2);
-        int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+        if (wheelPeople == true) {
 
-        int incorrectAnswer = random.nextInt(5);
-        while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
-            incorrectAnswer = random.nextInt(5);
+            Random random = new Random();
+            session = httpServletRequest.getSession();
+            session.setAttribute("opacityPeople",3);
+            int answer = random.nextInt(2);
+            int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+
+            int incorrectAnswer = random.nextInt(5);
+            while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
+                incorrectAnswer = random.nextInt(5);
+            }
+
+            if (answer == 0) {
+                session.setAttribute("wheelPeople", currentQuestion.getCorrectAnswer());
+            }
+            if (answer == 1) {
+                session.setAttribute("wheelPeople", getLetterFromNumber(incorrectAnswer));
+            }
+
+            wheelPeople = false;
         }
-
-        if (answer==0){session.setAttribute("wheelPeople", currentQuestion.getCorrectAnswer());}
-        if (answer==1){session.setAttribute("wheelPeople", getLetterFromNumber(incorrectAnswer));}
-
     }
 
     private void getWheelPhone(HttpServletRequest httpServletRequest) {
-        Random random = new Random();
-        HttpSession session = httpServletRequest.getSession();
-        int answer = random.nextInt(3);
-        int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+        if (wheelPhone == true) {
+            Random random = new Random();
+            session = httpServletRequest.getSession();
+            session.setAttribute("opacityPhone",3);
+            int answer = random.nextInt(3);
+            int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
 
-        int incorrectAnswer = random.nextInt(5);
-        while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
-            incorrectAnswer = random.nextInt(5);
+            int incorrectAnswer = random.nextInt(5);
+            while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
+                incorrectAnswer = random.nextInt(5);
+            }
+
+            if (answer == 0) {
+                session.setAttribute("wheelPhone", currentQuestion.getCorrectAnswer());
+            }
+            if (answer == 1) {
+                session.setAttribute("wheelPhone", getLetterFromNumber(incorrectAnswer));
+            }
+            if (answer == 2) {
+                session.setAttribute("wheelPhone", "Niestety nie znam odpowiedzi.");
+            }
+            wheelPhone = false;
         }
-
-        if (answer==0){session.setAttribute("wheelPhone", currentQuestion.getCorrectAnswer());}
-        if (answer==1){session.setAttribute("wheelPhone", getLetterFromNumber(incorrectAnswer));}
-        if (answer==2){session.setAttribute("wheelPhone", "Niestety nie znam odpowiedzi.");}
-
     }
 
     private void getWheel5050() {
-        int randomIncorrectAnswers;
-        Random random = new Random();
-        randomIncorrectAnswers = random.nextInt(5);
-        int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
-        while (randomIncorrectAnswers == 0 || randomIncorrectAnswers == correctAnswerInNumber) {
+        if (wheel5050 == true) {
+            session.setAttribute("opacity5050",3);
+            int randomIncorrectAnswers;
+            Random random = new Random();
             randomIncorrectAnswers = random.nextInt(5);
-        }
-        if (randomIncorrectAnswers != 1 && correctAnswerInNumber != 1) {
-            currentQuestion.setAnswerA("");
-        }
-        if (randomIncorrectAnswers != 2 && correctAnswerInNumber != 2) {
-            currentQuestion.setAnswerB("");
-        }
-        if (randomIncorrectAnswers != 3 && correctAnswerInNumber != 3) {
-            currentQuestion.setAnswerC("");
-        }
-        if (randomIncorrectAnswers != 4 && correctAnswerInNumber != 4) {
-            currentQuestion.setAnswerD("");
+            int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
+            while (randomIncorrectAnswers == 0 || randomIncorrectAnswers == correctAnswerInNumber) {
+                randomIncorrectAnswers = random.nextInt(5);
+            }
+            if (randomIncorrectAnswers != 1 && correctAnswerInNumber != 1) {
+                currentQuestion.setAnswerA("");
+            }
+            if (randomIncorrectAnswers != 2 && correctAnswerInNumber != 2) {
+                currentQuestion.setAnswerB("");
+            }
+            if (randomIncorrectAnswers != 3 && correctAnswerInNumber != 3) {
+                currentQuestion.setAnswerC("");
+            }
+            if (randomIncorrectAnswers != 4 && correctAnswerInNumber != 4) {
+                currentQuestion.setAnswerD("");
+            }
+            wheel5050 = false;
         }
     }
 
@@ -162,11 +188,19 @@ public class GameController extends HttpServlet {
         return 0;
     }
 
-    private String getLetterFromNumber(int number){
-        if (number==1){return "A";}
-        if (number==2){return "B";}
-        if (number==3){return "C";}
-        if (number==4){return "D";}
+    private String getLetterFromNumber(int number) {
+        if (number == 1) {
+            return "A";
+        }
+        if (number == 2) {
+            return "B";
+        }
+        if (number == 3) {
+            return "C";
+        }
+        if (number == 4) {
+            return "D";
+        }
         return null;
     }
 
@@ -184,6 +218,13 @@ public class GameController extends HttpServlet {
         session = httpServletRequest.getSession();
         session.setAttribute("currentNumber", currentNumber);
         session.setAttribute("currentQuestion", currentQuestion);
+        wheelPhone = true;
+        wheel5050 = true;
+        wheelPeople = true;
+        session.removeAttribute("opacityPeople");
+        session.removeAttribute("opacityPhone");
+        session.removeAttribute("opacity5050");
+
     }
 
     public void resetGame() {
@@ -191,6 +232,12 @@ public class GameController extends HttpServlet {
         currentQuestion = null;
         session.removeAttribute("currentNumber");
         session.removeAttribute("currentQuestion");
+        wheelPhone = false;
+        wheel5050 = false;
+        wheelPeople = false;
+        session.removeAttribute("opacityPeople");
+        session.removeAttribute("opacityPhone");
+        session.removeAttribute("opacity5050");
     }
 
     public void getParametersFromSession() {

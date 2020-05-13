@@ -9,9 +9,9 @@
 <div class="container">
 
     <div class="container" align="center">
-        <a href="/game?help=phone"><img src="/images/phone.png" width="10%" class="img-rounded"></a>
-        <a href="/game?help=5050"><img src="/images/5050.png" width="10%" class="img-rounded"></a>
-        <a href="/game?help=people"><img src="/images/people.png" width="10%" class="img-rounded"></a>
+        <a href="/game?help=phone"><img src="/images/phone.png" width="10%" style="opacity:0.${opacityPhone};filter:alpha(opacity=${opacityPhone}0);" class="img-rounded"></a>
+        <a href="/game?help=5050"><img src="/images/5050.png" width="10%" style="opacity:0.${opacity5050};filter:alpha(opacity=${opacity5050}0);" class="img-rounded"></a>
+        <a href="/game?help=people"><img src="/images/people.png" width="10%" style="opacity:0.${opacityPeople};filter:alpha(opacity=${opacityPeople}0);" class="img-rounded"></a>
     </div>
 
 
