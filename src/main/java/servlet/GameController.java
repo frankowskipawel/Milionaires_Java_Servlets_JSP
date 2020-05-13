@@ -18,7 +18,7 @@ import java.util.Random;
 @WebServlet(name = "GameController", value = "/game")
 public class GameController extends HttpServlet {
 
-    private int NUMBER_OF_GAME_QUESTIONS = 15;
+    private int NUMBER_OF_GAME_QUESTIONS = 12;
 
     private List<Question> questionList;
     private int currentNumber = 0;
@@ -77,6 +77,7 @@ public class GameController extends HttpServlet {
                 currentNumber++;
                 session.removeAttribute("wheelPeople");
                 session.removeAttribute("wheelPhone");
+                session.removeAttribute("wheel5050");
                 UserDao userDao = new UserDao();
                 User user = userDao.findById(login);
                 user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers() + 1);
@@ -167,6 +168,7 @@ public class GameController extends HttpServlet {
             if (randomIncorrectAnswers != 4 && correctAnswerInNumber != 4) {
                 currentQuestion.setAnswerD("");
             }
+            session.setAttribute("wheel5050", "Odrzucono 2 błędne odpowiedzi.");
             wheel5050 = false;
         }
     }
@@ -222,6 +224,7 @@ public class GameController extends HttpServlet {
         currentNumber = 1;
         currentQuestion = getRandomQuestion();
         session = httpServletRequest.getSession();
+        session.setAttribute("NUMBER_OF_GAME_QUESTIONS", NUMBER_OF_GAME_QUESTIONS);
         session.setAttribute("currentNumber", currentNumber);
         session.setAttribute("currentQuestion", currentQuestion);
         wheelPhone = true;

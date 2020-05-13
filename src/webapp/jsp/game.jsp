@@ -21,29 +21,29 @@
     </div>
 
 
-    <h3>Pytanie nr ${currentNumber}/15</h3>
+    <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS}</h3>
     <div class="progress">
-        <c:if test="${currentNumber<6}">
-        <div class="progress-bar progress-bar-success" role="progressbar" style="width:${currentNumber*6.6666}%"></c:if>
-            <c:if test="${currentNumber>5}">
+        <c:if test="${currentNumber<5}">
+        <div class="progress-bar progress-bar-success" role="progressbar" style="width:${currentNumber*8.3333}%"></c:if>
+            <c:if test="${currentNumber>4}">
             <div class="progress-bar progress-bar-success" role="progressbar" style="width:33.3333%"></c:if>
                 I ETAP
             </div>
-            <c:if test="${currentNumber<6}">
+            <c:if test="${currentNumber<5}">
             <div class="progress-bar progress-bar-warning" role="progressbar" style="width:0%"></c:if>
-                <c:if test="${currentNumber>5 && currentNumber<11}">
+                <c:if test="${currentNumber>4 && currentNumber<9}">
                 <div class="progress-bar progress-bar-warning" role="progressbar"
-                     style="width:${currentNumber*6.6666-33.3333}%"></c:if>
-                    <c:if test="${currentNumber>10}">
+                     style="width:${currentNumber*8.3333-33.3333}%"></c:if>
+                    <c:if test="${currentNumber>8}">
                     <div class="progress-bar progress-bar-warning" role="progressbar" style="width:33.3333%"></c:if>
                         II ETAP
                     </div>
-                    <c:if test="${currentNumber<11}">
+                    <c:if test="${currentNumber<9}">
                     <div class="progress-bar progress-bar-danger" role="progressbar" style="width:0%"></c:if>
-                        <c:if test="${currentNumber>10 && currentNumber<16}">
+                        <c:if test="${currentNumber>8 && currentNumber<13}">
                         <div class="progress-bar progress-bar-danger" role="progressbar"
-                             style="width:${currentNumber*6.6666-66.6666}%"></c:if>
-                            <c:if test="${currentNumber>15}">
+                             style="width:${currentNumber*8.3333-66.6666}%"></c:if>
+                            <c:if test="${currentNumber>12}">
                             <div class="progress-bar progress-bar-danger" role="progressbar"
                                  style="width:33.3333%"></c:if>
 
@@ -76,6 +76,9 @@
                         </c:if>
                         <c:if test="${not empty wheelPeople}">
                             <h2>Publiczność wskazuje na odpowiedź:<br>${wheelPeople}</h2>
+                        </c:if>
+                        <c:if test="${not empty wheel5050}">
+                            <h2>${wheel5050}</h2>
                         </c:if>
                     </div>
                     ${answer}
