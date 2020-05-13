@@ -29,6 +29,10 @@ public class GameController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String login = httpServletRequest.getSession().getAttribute("login").toString();
+        String newGame = httpServletRequest.getParameter("new");
+        if (newGame != null) {
+            currentNumber = 0;
+        }
         if (login == null || login.isEmpty()) {
             httpServletRequest.getRequestDispatcher("login.jsp").forward(httpServletRequest, httpServletResponse);
         }
@@ -43,19 +47,24 @@ public class GameController extends HttpServlet {
             resetGame();
             httpServletRequest.getRequestDispatcher("win.jsp").forward(httpServletRequest, httpServletResponse);
         }
-        if (answer.equals(currentQuestion.getCorrectAnswer())) {
-            currentQuestion = getRandomQuestion();
-            currentNumber++;
-            UserDao userDao = new UserDao();
-            User user = userDao.findById(login);
-            user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers()+1);
-            userDao.update(user);
-            setParametersToSession();
-            httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
-            return;
+        String resume = httpServletRequest.getParameter("resume");
+        if (resume==null) {
+            if (answer.equals(currentQuestion.getCorrectAnswer())) {
+                currentQuestion = getRandomQuestion();
+                currentNumber++;
+                UserDao userDao = new UserDao();
+                User user = userDao.findById(login);
+                user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers() + 1);
+                userDao.update(user);
+                setParametersToSession();
+                httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
+                return;
+            } else {
+                resetGame();
+                httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
+            }
         } else {
-            resetGame();
-            httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 

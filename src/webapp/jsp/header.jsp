@@ -18,12 +18,12 @@
         </div>
         <c:if test="${not empty login}">
             <ul class="nav navbar-nav">
-                <li><a href="/game">Kontynuuuj</a></li>
+                <li><a href="/game?resume">Kontynuuuj</a></li>
                 <li><a href="/ranking">Najlepsze wyniki</a></li>
             </ul>
             <div class="navbar-header" style="float: right">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/game">Nowa gra</a>
+                    <a class="navbar-brand" href="/game?new=true">Nowa gra</a>
                 </div>
             </div>
             <div class="navbar-header" style="float: right">
