@@ -31,6 +31,11 @@
                     <a class="navbar-brand" href="/logout">Wyloguj</a>
                 </div>
             </div>
+            <div class="navbar-header" style="float: right">
+                <div class="navbar-header">
+                    <a class="navbar-brand">(${login})</a>
+                </div>
+            </div>
         </c:if>
         <c:if test="${login=='admin'}">
             <div class="navbar-header" style="float: right">

@@ -35,7 +35,6 @@ public class GameController extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String login = httpServletRequest.getSession().getAttribute("login").toString();
         String newGame = httpServletRequest.getParameter("new");
-
         if (newGame != null) {
             currentNumber = 0;
         }

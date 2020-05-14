@@ -4,9 +4,9 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://localhost:3306/millionaires?serverTimezone=CET</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">admin</property>
+        <property name="connection.url">jdbc:mysql://www.wegiel.home.pl/00757872_millionaires?serverTimezone=CET</property>
+        <property name="hibernate.connection.username">00757872_millionaires</property>
+        <property name="hibernate.connection.password">millionaires</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="show_sql">true</property>
