@@ -3,6 +3,7 @@ package servlet;
 import dao.QuestionDao;
 import dao.UserDao;
 import entity.Question;
+import entity.StepAmount;
 import entity.User;
 
 import javax.servlet.ServletException;
@@ -27,12 +28,14 @@ public class GameController extends HttpServlet {
     private boolean wheelPhone;
     private boolean wheel5050;
     private boolean wheelPeople;
+    private StepAmount amount;
 
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String login = httpServletRequest.getSession().getAttribute("login").toString();
         String newGame = httpServletRequest.getParameter("new");
+
         if (newGame != null) {
             currentNumber = 0;
         }
@@ -45,6 +48,11 @@ public class GameController extends HttpServlet {
             return;
         }
         getParametersFromSession();
+        String endGame = httpServletRequest.getParameter("endGame");
+        if (endGame != null && endGame.equals("true")){
+            session.setAttribute("amount", StepAmount.valueOf("STEP_"+(currentNumber-1)).getValue());
+            httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
+        }
 
         String help = httpServletRequest.getParameter("help");
 
@@ -65,10 +73,7 @@ public class GameController extends HttpServlet {
         }
 
         String answer = httpServletRequest.getParameter("answer");
-        if (currentNumber >= NUMBER_OF_GAME_QUESTIONS) {
-            resetGame();
-            httpServletRequest.getRequestDispatcher("win.jsp").forward(httpServletRequest, httpServletResponse);
-        }
+
 
         String resume = httpServletRequest.getParameter("resume");
         if (resume == null) {
@@ -83,16 +88,40 @@ public class GameController extends HttpServlet {
                 user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers() + 1);
                 userDao.update(user);
                 setParametersToSession();
+                if (currentNumber <= NUMBER_OF_GAME_QUESTIONS) {
+                    amount = StepAmount.valueOf("STEP_" + currentNumber);
+                }
+                session.setAttribute("amount", amount.getValue());
+
+                if (currentNumber > NUMBER_OF_GAME_QUESTIONS) {
+                    resetGame();
+                    httpServletRequest.getRequestDispatcher("win.jsp").forward(httpServletRequest, httpServletResponse);
+                }
                 httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
                 return;
             } else {
                 resetGame();
+                calculateFinalWin();
                 httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
             }
         } else {
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
 
+
+
+    }
+
+    private void calculateFinalWin() {
+        if (amount.getValue() < 20000) {
+            session.setAttribute("amount", 0);
+        }
+        if (amount.getValue() > 10000 && amount.getValue() <= 125000) {
+            session.setAttribute("amount", 10000);
+        }
+        if (amount.getValue() > 125000 && amount.getValue() <= 1000000) {
+            session.setAttribute("amount", 125000);
+        }
     }
 
     private void getWheelPeople(HttpServletRequest httpServletRequest) {
@@ -233,7 +262,13 @@ public class GameController extends HttpServlet {
         session.removeAttribute("opacityPeople");
         session.removeAttribute("opacityPhone");
         session.removeAttribute("opacity5050");
+        session.removeAttribute("wheel5050");
+        session.removeAttribute("wheelPeople");
+        session.removeAttribute("wheelPhone");
 
+        amount = StepAmount.valueOf("STEP_" + currentNumber);
+        session.setAttribute("amount", amount.getValue());
+        System.out.println("initializeeeeeee");
     }
 
     public void resetGame() {

@@ -4,7 +4,7 @@
 <jsp:include page="header.jsp"/>
 <br>
 <div class="container">
-    <h1>Sprobuj jeszcze raz.</h1>
+    <h1>Twoja wygrana to ${amount}zł. Spróbuj szczęścia jeszcze raz.</h1>
     <img src="/images/defeat.jpg" alt="defeat">
 </div>
 </body>

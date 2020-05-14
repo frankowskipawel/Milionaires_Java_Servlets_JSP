@@ -4,7 +4,6 @@
 <jsp:include page="header.jsp"/>
 <br>
 
-
 <c:if test="${not empty errorName}"><h1>${errorName}</h1></c:if>
 <div class="container">
 
@@ -21,7 +20,7 @@
     </div>
 
 
-    <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS}</h3>
+    <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS} za ${amount}zł</h3>
     <div class="progress">
         <c:if test="${currentNumber<(NUMBER_OF_GAME_QUESTIONS/3+1)}">
         <div class="progress-bar progress-bar-success" role="progressbar" style="width:${currentNumber*(100/NUMBER_OF_GAME_QUESTIONS)}%"></c:if>
@@ -70,6 +69,7 @@
                                <c:if test="${currentQuestion.answerD == ''}">disabled</c:if>>D: ${currentQuestion.answerD}</a>
                         </div>
                         <br>
+                        <a href="/game?endGame=true" class="btn btn-info" role="button">Rezygnuje</a>
                         <br>
                         <c:if test="${not empty wheelPhone}">
                             <h2>Twój przyjaciel wskazuje na następującą odpowiedź:<br>${wheelPhone}</h2>
