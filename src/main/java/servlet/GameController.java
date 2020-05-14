@@ -25,11 +25,10 @@ public class GameController extends HttpServlet {
     private int currentNumber = 0;
     private Question currentQuestion;
     private HttpSession session;
-    private boolean wheelPhone;
-    private boolean wheel5050;
-    private boolean wheelPeople;
-    private StepAmount amount;
-
+    private boolean isAvailablePhoneAFriend;
+    private boolean isAvailable5050;
+    private boolean isAvailableAskTheAudience;
+    private StepAmount amountToBeWon;
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -55,56 +54,51 @@ public class GameController extends HttpServlet {
             } else {
                 finalWin = StepAmount.valueOf("STEP_" + (currentNumber - 1)).getValue();
             }
-
-            session.setAttribute("amount", finalWin);
+            session.setAttribute("amountToBeWon", finalWin);
             httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
         }
 
-        String help = httpServletRequest.getParameter("help");
+        String lifeline = httpServletRequest.getParameter("lifeline");
 
-        //help 5050
-        if (help != null && help.equals("5050")) {
-            getWheel5050();
+        //used 5050
+        if (lifeline != null && lifeline.equals("5050")) {
+            use5050();
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
-        //help phone
-        if (help != null && help.equals("phone")) {
-            getWheelPhone(httpServletRequest);
+        //used phone a friend
+        if (lifeline != null && lifeline.equals("phoneAFriend")) {
+            usePhoneAFriend(httpServletRequest);
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
-        //help people
-        if (help != null && help.equals("people")) {
-            getWheelPeople(httpServletRequest);
+        //used ask the audience
+        if (lifeline != null && lifeline.equals("askThePeople")) {
+            useAskTheAudience(httpServletRequest);
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
-
         String answer = httpServletRequest.getParameter("answer");
-
-
         String resume = httpServletRequest.getParameter("resume");
         if (resume == null) {
             if (answer.equals(currentQuestion.getCorrectAnswer())) {
                 currentQuestion = getRandomQuestion();
                 currentNumber++;
-                session.removeAttribute("wheelPeople");
-                session.removeAttribute("wheelPhone");
-                session.removeAttribute("wheel5050");
+                session.removeAttribute("answerFromAskTheAudience");
+                session.removeAttribute("answerFromPhoneAFriend");
+                session.removeAttribute("answerFrom5050");
                 UserDao userDao = new UserDao();
                 User user = userDao.findById(login);
                 user.setSumOfCorrectAnswers(user.getSumOfCorrectAnswers() + 1);
                 userDao.update(user);
                 setParametersToSession();
                 if (currentNumber <= NUMBER_OF_GAME_QUESTIONS) {
-                    amount = StepAmount.valueOf("STEP_" + currentNumber);
+                    amountToBeWon = StepAmount.valueOf("STEP_" + currentNumber);
                 }
-                session.setAttribute("amount", amount.getValue());
+                session.setAttribute("amountToBeWon", amountToBeWon.getValue());
 
                 if (currentNumber > NUMBER_OF_GAME_QUESTIONS) {
                     resetGame();
                     httpServletRequest.getRequestDispatcher("win.jsp").forward(httpServletRequest, httpServletResponse);
                 }
                 httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
-                return;
             } else {
                 resetGame();
                 calculateFinalWin();
@@ -116,23 +110,23 @@ public class GameController extends HttpServlet {
     }
 
     private void calculateFinalWin() {
-        if (amount.getValue() < 20000) {
-            session.setAttribute("amount", 0);
+        if (amountToBeWon.getValue() < 20000) {
+            session.setAttribute("amountToBeWon", 0);
         }
-        if (amount.getValue() > 1000 && amount.getValue() <= 75000) {
-            session.setAttribute("amount", 1000);
+        if (amountToBeWon.getValue() > 1000 && amountToBeWon.getValue() <= 75000) {
+            session.setAttribute("amountToBeWon", 1000);
         }
-        if (amount.getValue() > 40000 && amount.getValue() <= 1000000) {
-            session.setAttribute("amount", 40000);
+        if (amountToBeWon.getValue() > 40000 && amountToBeWon.getValue() <= 1000000) {
+            session.setAttribute("amountToBeWon", 40000);
         }
     }
 
-    private void getWheelPeople(HttpServletRequest httpServletRequest) {
-        if (wheelPeople == true) {
+    private void useAskTheAudience(HttpServletRequest httpServletRequest) {
+        if (isAvailableAskTheAudience == true) {
 
             Random random = new Random();
             session = httpServletRequest.getSession();
-            session.setAttribute("opacityPeople", 3);
+            session.setAttribute("greydOutAskTheAudience", 3);
             int answer = random.nextInt(2);
             int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
 
@@ -140,23 +134,21 @@ public class GameController extends HttpServlet {
             while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
                 incorrectAnswer = random.nextInt(5);
             }
-
             if (answer == 0) {
-                session.setAttribute("wheelPeople", currentQuestion.getCorrectAnswer());
+                session.setAttribute("answerFromAskTheAudience", currentQuestion.getCorrectAnswer());
             }
             if (answer == 1) {
-                session.setAttribute("wheelPeople", getLetterFromNumber(incorrectAnswer));
+                session.setAttribute("answerFromAskTheAudience", getLetterFromNumber(incorrectAnswer));
             }
-
-            wheelPeople = false;
+            isAvailableAskTheAudience = false;
         }
     }
 
-    private void getWheelPhone(HttpServletRequest httpServletRequest) {
-        if (wheelPhone == true) {
+    private void usePhoneAFriend(HttpServletRequest httpServletRequest) {
+        if (isAvailablePhoneAFriend == true) {
             Random random = new Random();
             session = httpServletRequest.getSession();
-            session.setAttribute("opacityPhone", 3);
+            session.setAttribute("greyedOutAskAFriend", 3);
             int answer = random.nextInt(3);
             int correctAnswerInNumber = correctAnswerInNumber(currentQuestion);
 
@@ -166,21 +158,21 @@ public class GameController extends HttpServlet {
             }
 
             if (answer == 0) {
-                session.setAttribute("wheelPhone", currentQuestion.getCorrectAnswer());
+                session.setAttribute("answerFromPhoneAFriend", currentQuestion.getCorrectAnswer());
             }
             if (answer == 1) {
-                session.setAttribute("wheelPhone", getLetterFromNumber(incorrectAnswer));
+                session.setAttribute("answerFromPhoneAFriend", getLetterFromNumber(incorrectAnswer));
             }
             if (answer == 2) {
-                session.setAttribute("wheelPhone", "Niestety nie znam odpowiedzi.");
+                session.setAttribute("answerFromPhoneAFriend", "Niestety nie znam odpowiedzi.");
             }
-            wheelPhone = false;
+            isAvailablePhoneAFriend = false;
         }
     }
 
-    private void getWheel5050() {
-        if (wheel5050 == true) {
-            session.setAttribute("opacity5050", 3);
+    private void use5050() {
+        if (isAvailable5050 == true) {
+            session.setAttribute("greyedOut5050", 3);
             int randomIncorrectAnswers;
             Random random = new Random();
             randomIncorrectAnswers = random.nextInt(5);
@@ -200,8 +192,8 @@ public class GameController extends HttpServlet {
             if (randomIncorrectAnswers != 4 && correctAnswerInNumber != 4) {
                 currentQuestion.setAnswerD("");
             }
-            session.setAttribute("wheel5050", "Odrzucono 2 błędne odpowiedzi.");
-            wheel5050 = false;
+            session.setAttribute("answerFrom5050", "Odrzucono 2 błędne odpowiedzi.");
+            isAvailable5050 = false;
         }
     }
 
@@ -259,32 +251,23 @@ public class GameController extends HttpServlet {
         session.setAttribute("NUMBER_OF_GAME_QUESTIONS", NUMBER_OF_GAME_QUESTIONS);
         session.setAttribute("currentNumber", currentNumber);
         session.setAttribute("currentQuestion", currentQuestion);
-        wheelPhone = true;
-        wheel5050 = true;
-        wheelPeople = true;
-        session.removeAttribute("opacityPeople");
-        session.removeAttribute("opacityPhone");
-        session.removeAttribute("opacity5050");
-        session.removeAttribute("wheel5050");
-        session.removeAttribute("wheelPeople");
-        session.removeAttribute("wheelPhone");
-
-        amount = StepAmount.valueOf("STEP_" + currentNumber);
-        session.setAttribute("amount", amount.getValue());
+        isAvailablePhoneAFriend = true;
+        isAvailable5050 = true;
+        isAvailableAskTheAudience = true;
+        session.removeAttribute("greydOutAskTheAudience");
+        session.removeAttribute("greyedOutAskAFriend");
+        session.removeAttribute("greyedOut5050");
+        session.removeAttribute("answerFrom5050");
+        session.removeAttribute("answerFromAskTheAudience");
+        session.removeAttribute("answerFromPhoneAFriend");
+        amountToBeWon = StepAmount.valueOf("STEP_" + currentNumber);
+        session.setAttribute("amountToBeWon", amountToBeWon.getValue());
         session.setAttribute("yourWin", "0zł");
     }
 
     public void resetGame() {
         currentNumber = 0;
         currentQuestion = null;
-        session.removeAttribute("currentNumber");
-        session.removeAttribute("currentQuestion");
-        wheelPhone = false;
-        wheel5050 = false;
-        wheelPeople = false;
-        session.removeAttribute("opacityPeople");
-        session.removeAttribute("opacityPhone");
-        session.removeAttribute("opacity5050");
     }
 
     public void getParametersFromSession() {

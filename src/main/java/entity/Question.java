@@ -28,9 +28,6 @@ public class Question {
     @Column(name = "QUE_CORRECT_ANSWER")
     private String correctAnswer;
 
-
-
-
     public Question() {
     }
 }

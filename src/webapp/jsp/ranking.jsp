@@ -15,41 +15,13 @@
         </tr>
         </thead>
         <tbody>
-
-
         <c:forEach items="${users}" var="user">
-<%--            <tr>--%>
-<%--                <th>${car.id}</th>--%>
-<%--                <td>${car.name}</td>--%>
-
             <tr>
                 <td>${user.login}</td>
                 <td>${user.name}</td>
                 <td>${user.sumOfCorrectAnswers}</td>
             </tr>
-
-
-
-<%--            </tr>--%>
         </c:forEach>
-<%--        <tr>--%>
-<%--            <td>John</td>--%>
-<%--            <td>Doe</td>--%>
-<%--            <td>john@example.com</td>--%>
-<%--        </tr>--%>
-<%--        <tr>--%>
-<%--            <td>Mary</td>--%>
-<%--            <td>Moe</td>--%>
-<%--            <td>mary@example.com</td>--%>
-<%--        </tr>--%>
-<%--        <tr>--%>
-<%--            <td>July</td>--%>
-<%--            <td>Dooley</td>--%>
-<%--            <td>july@example.com</td>--%>
-<%--        </tr>--%>
-<%--        --%>
-
-
         </tbody>
     </table>
 </div>

@@ -5,7 +5,6 @@
     <c:if test="${not empty errorLogin}">
         <div class="alert alert-danger">${errorLogin}
         </div>
-
     </c:if>
     <form action="/login" method="post">
         <div class="form-group">

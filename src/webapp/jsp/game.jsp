@@ -11,19 +11,14 @@
 <div class="container">
 
     <div class="container" align="center">
-        <a href="/game?help=phone"><img src="/images/phone.png" width="10%"
-                                        style="opacity:0.${opacityPhone};filter:alpha(opacity=${opacityPhone}0);"
-                                        class="img-rounded"></a>
-        <a href="/game?help=5050"><img src="/images/5050.png" width="10%"
-                                       style="opacity:0.${opacity5050};filter:alpha(opacity=${opacity5050}0);"
-                                       class="img-rounded"></a>
-        <a href="/game?help=people"><img src="/images/people.png" width="10%"
-                                         style="opacity:0.${opacityPeople};filter:alpha(opacity=${opacityPeople}0);"
-                                         class="img-rounded"></a>
+        <a href="/game?lifeline=phoneAFriend">
+            <img src="/images/phone.png" width="10%" style="opacity:0.${greyedOutAskAFriend};filter:alpha(opacity=${greyedOutAskAFriend}0);" class="img-rounded"></a>
+        <a href="/game?lifeline=5050">
+            <img src="/images/5050.png" width="10%" style="opacity:0.${greyedOut5050};filter:alpha(opacity=${greyedOut5050}0);" class="img-rounded"></a>
+        <a href="/game?lifeline=askThePeople"><img src="/images/people.png" width="10%" style="opacity:0.${greydOutAskTheAudience};filter:alpha(opacity=${greydOutAskTheAudience}0);" class="img-rounded"></a>
     </div>
 
-
-    <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS} za ${amount}zł</h3>
+    <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS} za ${amountToBeWon}zł</h3>
 
     <div class="progress">
         <c:if test="${currentNumber<3}">
@@ -76,17 +71,16 @@
                         <br>
                         <a href="/game?endGame=true" class="btn btn-info" role="button">Rezygnuje</a>
                         <br>
-                        <c:if test="${not empty wheelPhone}">
-                            <h2>Twój przyjaciel wskazuje na następującą odpowiedź:<br>${wheelPhone}</h2>
+                        <c:if test="${not empty answerFromPhoneAFriend}">
+                            <h2>Twój przyjaciel wskazuje na następującą odpowiedź:<br>${answerFromPhoneAFriend}</h2>
                         </c:if>
-                        <c:if test="${not empty wheelPeople}">
-                            <h2>Publiczność wskazuje na odpowiedź:<br>${wheelPeople}</h2>
+                        <c:if test="${not empty answerFromAskTheAudience}">
+                            <h2>Publiczność wskazuje na odpowiedź:<br>${answerFromAskTheAudience}</h2>
                         </c:if>
-                        <c:if test="${not empty wheel5050}">
-                            <h2>${wheel5050}</h2>
+                        <c:if test="${not empty answerFrom5050}">
+                            <h2>${answerFrom5050}</h2>
                         </c:if>
                     </div>
-<%--                    ${answer}--%>
                 </div>
             </div>
         </div>

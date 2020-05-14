@@ -21,7 +21,6 @@ public class User {
     @Column(name = "USR_CORRECT_ANSWERS")
     private int sumOfCorrectAnswers;
 
-
     public User() {
     }
 }
