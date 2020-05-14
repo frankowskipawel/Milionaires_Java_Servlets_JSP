@@ -268,7 +268,7 @@ public class GameController extends HttpServlet {
 
         amount = StepAmount.valueOf("STEP_" + currentNumber);
         session.setAttribute("amount", amount.getValue());
-        System.out.println("initializeeeeeee");
+        session.setAttribute("yourWin", "0zł");
     }
 
     public void resetGame() {
@@ -292,5 +292,6 @@ public class GameController extends HttpServlet {
     public void setParametersToSession() {
         session.setAttribute("currentNumber", currentNumber);
         session.setAttribute("currentQuestion", currentQuestion);
+        session.setAttribute("yourWin", StepAmount.valueOf("STEP_"+(currentNumber-1)).getValue()+"zł");
     }
 }

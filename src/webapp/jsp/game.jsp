@@ -5,6 +5,9 @@
 <br>
 
 <c:if test="${not empty errorName}"><h1>${errorName}</h1></c:if>
+<div class="container" align="right">
+    <h4>Twoja wygrana : ${yourWin}</h4>
+</div>
 <div class="container">
 
     <div class="container" align="center">
