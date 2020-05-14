@@ -48,8 +48,15 @@ public class GameController extends HttpServlet {
         }
         getParametersFromSession();
         String endGame = httpServletRequest.getParameter("endGame");
-        if (endGame != null && endGame.equals("true")){
-            session.setAttribute("amount", StepAmount.valueOf("STEP_"+(currentNumber-1)).getValue());
+        if (endGame != null && endGame.equals("true")) {
+            int finalWin;
+            if (currentNumber == 1) {
+                finalWin = 0;
+            } else {
+                finalWin = StepAmount.valueOf("STEP_" + (currentNumber - 1)).getValue();
+            }
+
+            session.setAttribute("amount", finalWin);
             httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
         }
 
@@ -288,6 +295,6 @@ public class GameController extends HttpServlet {
     public void setParametersToSession() {
         session.setAttribute("currentNumber", currentNumber);
         session.setAttribute("currentQuestion", currentQuestion);
-        session.setAttribute("yourWin", StepAmount.valueOf("STEP_"+(currentNumber-1)).getValue()+"zł");
+        session.setAttribute("yourWin", StepAmount.valueOf("STEP_" + (currentNumber - 1)).getValue() + "zł");
     }
 }
