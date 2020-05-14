@@ -24,31 +24,33 @@
 
 
     <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS} za ${amount}zł</h3>
+
     <div class="progress">
-        <c:if test="${currentNumber<(NUMBER_OF_GAME_QUESTIONS/3+1)}">
-        <div class="progress-bar progress-bar-success" role="progressbar" style="width:${currentNumber*(100/NUMBER_OF_GAME_QUESTIONS)}%"></c:if>
-            <c:if test="${currentNumber>(NUMBER_OF_GAME_QUESTIONS/3)}">
-            <div class="progress-bar progress-bar-success" role="progressbar" style="width:33.3333%"></c:if>
+        <c:if test="${currentNumber<3}">
+        <div class="progress-bar progress-bar-success" role="progressbar" style="width:${currentNumber*8.3333}%"></c:if>
+            <c:if test="${currentNumber>2}">
+            <div class="progress-bar progress-bar-success" role="progressbar" style="width:16.6666%"></c:if>
                 I ETAP
             </div>
-            <c:if test="${currentNumber<(NUMBER_OF_GAME_QUESTIONS/3+1)}">
+
+            <c:if test="${currentNumber<3}">
             <div class="progress-bar progress-bar-warning" role="progressbar" style="width:0%"></c:if>
-                <c:if test="${currentNumber>(NUMBER_OF_GAME_QUESTIONS/3) && currentNumber<(NUMBER_OF_GAME_QUESTIONS/3*2+1)}">
+                <c:if test="${currentNumber>2 && currentNumber<8}">
                 <div class="progress-bar progress-bar-warning" role="progressbar"
-                     style="width:${currentNumber*(100/NUMBER_OF_GAME_QUESTIONS)-33.3333}%"></c:if>
-                    <c:if test="${currentNumber>(NUMBER_OF_GAME_QUESTIONS/3*2)}">
-                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:33.3333%"></c:if>
+                     style="width:${(currentNumber*8.3333)-(16.6666)}%"></c:if>
+                    <c:if test="${currentNumber>7}">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:41.6666%"></c:if>
                         II ETAP
                     </div>
 
-                    <c:if test="${currentNumber<((NUMBER_OF_GAME_QUESTIONS/3*2)+1)}">
+                    <c:if test="${currentNumber<8}">
                     <div class="progress-bar progress-bar-danger" role="progressbar" style="width:0%"></c:if>
-                        <c:if test="${currentNumber>(NUMBER_OF_GAME_QUESTIONS/3*2) && currentNumber<NUMBER_OF_GAME_QUESTIONS+1}">
+                        <c:if test="${currentNumber>7 && currentNumber<NUMBER_OF_GAME_QUESTIONS+1}">
                         <div class="progress-bar progress-bar-danger" role="progressbar"
-                             style="width:${currentNumber*(100/NUMBER_OF_GAME_QUESTIONS)-66.6666}%"></c:if>
+                             style="width:${(currentNumber*8.3333)-58.3333}%"></c:if>
                             <c:if test="${currentNumber>NUMBER_OF_GAME_QUESTIONS}">
                             <div class="progress-bar progress-bar-danger" role="progressbar"
-                                 style="width:33.3333%"></c:if>
+                                 style="width:41.6666%"></c:if>
                                 III ETAP
                             </div>
                         </div>

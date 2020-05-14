@@ -107,20 +107,17 @@ public class GameController extends HttpServlet {
         } else {
             httpServletRequest.getRequestDispatcher("game.jsp").forward(httpServletRequest, httpServletResponse);
         }
-
-
-
     }
 
     private void calculateFinalWin() {
         if (amount.getValue() < 20000) {
             session.setAttribute("amount", 0);
         }
-        if (amount.getValue() > 10000 && amount.getValue() <= 125000) {
-            session.setAttribute("amount", 10000);
+        if (amount.getValue() > 1000 && amount.getValue() <= 75000) {
+            session.setAttribute("amount", 1000);
         }
-        if (amount.getValue() > 125000 && amount.getValue() <= 1000000) {
-            session.setAttribute("amount", 125000);
+        if (amount.getValue() > 40000 && amount.getValue() <= 1000000) {
+            session.setAttribute("amount", 40000);
         }
     }
 
