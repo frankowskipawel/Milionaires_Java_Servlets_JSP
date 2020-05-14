@@ -81,7 +81,7 @@
                             <h2>${wheel5050}</h2>
                         </c:if>
                     </div>
-                    ${answer}
+<%--                    ${answer}--%>
                 </div>
             </div>
         </div>
