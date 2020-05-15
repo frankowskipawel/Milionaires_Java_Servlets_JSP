@@ -4,7 +4,7 @@
 <div class="container">
         <c:if test="${not empty message}"><h5 style="color:red">${message}</h5></c:if>
 
-    <form action="/admin" method="post">
+    <form action="/addquestion" method="post">
         <div class="form-group">
             <label for="text">Pytanie:</label>
             <input type="text" name="text" class="form-control" id="text" value="${text_temp}">

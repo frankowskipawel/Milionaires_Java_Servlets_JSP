@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "AdminController", value = "/admin")
-public class AdminController extends HttpServlet {
+@WebServlet(name = "AddQuestionController", value = "/addquestion")
+public class AddQuestionController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
        String login = httpServletRequest.getSession().getAttribute("login").toString();
         if (login.isEmpty() || !login.equals("admin")){
-           httpServletRequest.getRequestDispatcher("home.jsp").forward(httpServletRequest, httpServletResponse);
-
+           httpServletRequest.getRequestDispatcher("addquestion.jsp").forward(httpServletRequest, httpServletResponse);
        }
-        httpServletRequest.getRequestDispatcher("admin.jsp").forward(httpServletRequest, httpServletResponse);
+        httpServletRequest.getRequestDispatcher("addquestion.jsp").forward(httpServletRequest, httpServletResponse);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class AdminController extends HttpServlet {
 
         if (text.isEmpty() || answerA.isEmpty() || answerB.isEmpty() || answerC.isEmpty() || answerD.isEmpty() || correctAnswer.isEmpty()){
             httpServletRequest.setAttribute("message", "Uzupełnij wszystkie pola");
-            httpServletRequest.getRequestDispatcher("admin.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("addquestion.jsp").forward(httpServletRequest, httpServletResponse);
         }
 
         Question question = Question.builder()
@@ -47,6 +46,6 @@ public class AdminController extends HttpServlet {
         QuestionDao questionDao = new QuestionDao();
         questionDao.insert(question);
         httpServletRequest.setAttribute("message", "Dodano pytanie.");
-        httpServletRequest.getRequestDispatcher("admin.jsp").forward(httpServletRequest, httpServletResponse);
+        httpServletRequest.getRequestDispatcher("addquestion.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }

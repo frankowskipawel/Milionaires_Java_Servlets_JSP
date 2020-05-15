@@ -3,7 +3,7 @@ package servlet;
 import dao.QuestionDao;
 import dao.UserDao;
 import entity.Question;
-import entity.StepAmount;
+import entity.AmountStep;
 import entity.User;
 
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public class GameController extends HttpServlet {
     private boolean isAvailablePhoneAFriend;
     private boolean isAvailable5050;
     private boolean isAvailableAskTheAudience;
-    private StepAmount amountToBeWon;
+    private AmountStep amountToBeWon;
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -52,7 +52,7 @@ public class GameController extends HttpServlet {
             if (currentNumber == 1) {
                 finalWin = 0;
             } else {
-                finalWin = StepAmount.valueOf("STEP_" + (currentNumber - 1)).getValue();
+                finalWin = AmountStep.valueOf("STEP_" + (currentNumber - 1)).getValue();
             }
             session.setAttribute("amountToBeWon", finalWin);
             httpServletRequest.getRequestDispatcher("defeat.jsp").forward(httpServletRequest, httpServletResponse);
@@ -90,7 +90,7 @@ public class GameController extends HttpServlet {
                 userDao.update(user);
                 setParametersToSession();
                 if (currentNumber <= NUMBER_OF_GAME_QUESTIONS) {
-                    amountToBeWon = StepAmount.valueOf("STEP_" + currentNumber);
+                    amountToBeWon = AmountStep.valueOf("STEP_" + currentNumber);
                 }
                 session.setAttribute("amountToBeWon", amountToBeWon.getValue());
 
@@ -156,7 +156,6 @@ public class GameController extends HttpServlet {
             while (incorrectAnswer == 0 || incorrectAnswer == correctAnswerInNumber) {
                 incorrectAnswer = random.nextInt(5);
             }
-
             if (answer == 0) {
                 session.setAttribute("answerFromPhoneAFriend", currentQuestion.getCorrectAnswer());
             }
@@ -260,7 +259,7 @@ public class GameController extends HttpServlet {
         session.removeAttribute("answerFrom5050");
         session.removeAttribute("answerFromAskTheAudience");
         session.removeAttribute("answerFromPhoneAFriend");
-        amountToBeWon = StepAmount.valueOf("STEP_" + currentNumber);
+        amountToBeWon = AmountStep.valueOf("STEP_" + currentNumber);
         session.setAttribute("amountToBeWon", amountToBeWon.getValue());
         session.setAttribute("yourWin", "0zł");
     }
@@ -278,6 +277,6 @@ public class GameController extends HttpServlet {
     public void setParametersToSession() {
         session.setAttribute("currentNumber", currentNumber);
         session.setAttribute("currentQuestion", currentQuestion);
-        session.setAttribute("yourWin", StepAmount.valueOf("STEP_" + (currentNumber - 1)).getValue() + "zł");
+        session.setAttribute("yourWin", AmountStep.valueOf("STEP_" + (currentNumber - 1)).getValue() + "zł");
     }
 }

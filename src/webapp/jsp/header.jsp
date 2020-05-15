@@ -40,7 +40,7 @@
         <c:if test="${login=='admin'}">
             <div class="navbar-header" style="float: right">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/admin">Dodaj pytanie</a>
+                    <a class="navbar-brand" href="/addquestion">Dodaj pytanie</a>
                 </div>
             </div>
         </c:if>

@@ -8,14 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//w sesji trzymać odpowiedzi poprawne odpowiedzi
-//tylko zalogowany uzytkownik
-//Ekran zwyciestwa
-//Ranking (imie i ile poprawnych odpowiedzi ma byc
-//pytania losowane
-//dodawanie pytania
-
-
 @WebServlet(name = "HomeController", value = "/home")
 public class HomeController extends HttpServlet {
     @Override

@@ -12,9 +12,7 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hbm2ddl.auto">validate</property>
-        <!--        validate lub create -->
-        <!--        <property name="hibernate.connection.provider_disables_autocommit">true</property>-->
-        <!-- W Springu można skanować pakiety w poszukiwaniu encji - niestety, goły hibernate tego nie ma -->
+
         <mapping class="entity.Question"/>
         <mapping class="entity.User"/>
 

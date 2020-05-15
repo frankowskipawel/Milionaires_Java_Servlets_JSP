@@ -3,7 +3,7 @@ package entity;
 import lombok.Getter;
 
 @Getter
-public enum StepAmount {
+public enum AmountStep {
 
     STEP_1 (500),
     STEP_2 (1000),// Suma gwarantowana
@@ -20,7 +20,7 @@ public enum StepAmount {
 
     int value;
 
-    StepAmount(int value) {
+    AmountStep(int value) {
         this.value = value;
     }
 }

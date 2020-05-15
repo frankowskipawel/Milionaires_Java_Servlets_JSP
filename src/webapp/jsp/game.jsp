@@ -12,10 +12,15 @@
 
     <div class="container" align="center">
         <a href="/game?lifeline=phoneAFriend">
-            <img src="/images/phone.png" width="10%" style="opacity:0.${greyedOutAskAFriend};filter:alpha(opacity=${greyedOutAskAFriend}0);" class="img-rounded"></a>
+            <img src="/images/phone.png" width="10%"
+                 style="opacity:0.${greyedOutAskAFriend};filter:alpha(opacity=${greyedOutAskAFriend}0);"
+                 class="img-rounded"></a>
         <a href="/game?lifeline=5050">
-            <img src="/images/5050.png" width="10%" style="opacity:0.${greyedOut5050};filter:alpha(opacity=${greyedOut5050}0);" class="img-rounded"></a>
-        <a href="/game?lifeline=askThePeople"><img src="/images/people.png" width="10%" style="opacity:0.${greydOutAskTheAudience};filter:alpha(opacity=${greydOutAskTheAudience}0);" class="img-rounded"></a>
+            <img src="/images/5050.png" width="10%"
+                 style="opacity:0.${greyedOut5050};filter:alpha(opacity=${greyedOut5050}0);" class="img-rounded"></a>
+        <a href="/game?lifeline=askThePeople"><img src="/images/people.png" width="10%"
+                                                   style="opacity:0.${greydOutAskTheAudience};filter:alpha(opacity=${greydOutAskTheAudience}0);"
+                                                   class="img-rounded"></a>
     </div>
 
     <h3>Pytanie nr ${currentNumber}/${NUMBER_OF_GAME_QUESTIONS} za ${amountToBeWon}zł</h3>
